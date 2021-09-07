@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "deploy",
+        "type": "shell",
+        "command": "ANSIBLE_CONFIG=ansible.cfg ansible-playbook site.yml",
+        "problemMatcher": []
+      }
+    ]
+}

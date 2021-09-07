@@ -1,0 +1,12 @@
+- file: path="{{ item }}" state=directory
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/etc-pihole"
+    - "{{ basedir }}/etc-dnsmasq.d"
+- copy:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - dnscrypt-proxy.toml
+- docker_compose: project_src="{{ basedir }}"

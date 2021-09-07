@@ -1,0 +1,67 @@
+version: "3"
+
+services:
+
+  cloudflared:
+    container_name: cloudflared
+    image: visibilityspots/cloudflared:alpine-3.13
+    restart: unless-stopped
+    ports:
+      - "5054:5054/tcp"
+      - "5054:5054/udp"
+    environment:
+      TZ: "Europe/Prague"
+      ADDRESS: "0.0.0.0"
+      PORT: "5054"
+    networks:
+      pihole_net:
+        ipv4_address: 10.0.0.2
+
+  dnsproxy:
+    container_name: dnscrypt-proxy
+    image: gists/dnscrypt-proxy:2.0.45
+    restart: unless-stopped
+    ports:
+      - "5055:5055/udp"
+      - "5055:5055/tcp"
+    volumes:
+      - './dnscrypt-proxy.toml:/etc/dnscrypt-proxy/dnscrypt-proxy.toml'
+    networks:
+      pihole_net:
+        ipv4_address: 10.0.0.4
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:v5.8.1
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'Europe/Prague'
+      WEBPASSWORD: 'wIyTlOamZ'
+      ServerIP: '10.0.0.3'
+      DNS1: '10.0.0.2#5054'
+      DNS2: '10.0.0.4#5055'
+      IPv6: 'true'
+      DNSMASQ_LISTENING: 'all'
+    networks:
+      pihole_net:
+        ipv4_address: 10.0.0.3
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+networks:
+  pihole_net:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.0.0.0/29

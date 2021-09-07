@@ -1,0 +1,13 @@
+---
+
+- hosts: pihole
+  vars:
+    home: /home/pi
+  roles:
+    - role: essentials
+    - role: docker
+    - role: docker-compose
+    - role: pi-hole
+      basedir: "{{ home }}/pihole"
+    # - role: monitoring
+      # basedir: "{{ home }}/monitoring"

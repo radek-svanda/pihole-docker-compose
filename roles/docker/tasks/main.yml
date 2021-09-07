@@ -1,0 +1,12 @@
+
+- file: path="{{ home }}/docker" state=directory
+- get_url:
+    url: https://get.docker.com/
+    dest: "{{ home }}/docker/install.sh"
+    mode: '0700'
+- command: sh install.sh
+  become: yes
+  args:
+    chdir: "{{ home }}/docker"
+    creates: /usr/bin/docker
+- pip: name=docker state=present
