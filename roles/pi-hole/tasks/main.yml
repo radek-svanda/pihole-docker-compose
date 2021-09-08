@@ -10,3 +10,5 @@
     - docker-compose.yml
     - dnscrypt-proxy.toml
 - docker_compose: project_src="{{ basedir }}"
+
+# https://www.observability.blog/monitoring-pi-hole-with-prometheus/

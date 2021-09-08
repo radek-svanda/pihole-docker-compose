@@ -1,0 +1,12 @@
+- file: path="{{ item }}" state=directory
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/prometheus"
+    - "{{ basedir }}/grafana"
+- copy:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - prometheus/
+    - grafana/
