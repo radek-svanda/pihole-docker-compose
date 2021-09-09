@@ -20,6 +20,11 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
     restart: unless-stopped
+    networks:
+      monitoring_net:
+        ipv4_address: 10.0.10.2
+      pihole_net:
+        ipv4_address: 10.0.0.6
 
   node_exporter:
     image: quay.io/prometheus/node-exporter:v1.2.2
@@ -37,12 +42,14 @@ services:
       - '--path.sysfs=/host/sys'
       - --collector.filesystem.ignored-mount-points
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    networks:
+      monitoring_net:
+        ipv4_address: 10.0.10.3
 
   grafana:
     image: grafana/grafana:8.1.2
+    container_name: grafana
     user: "472"
-    # depends_on:
-      # - prometheus
     ports:
       - 3000:3000
     volumes:
@@ -50,11 +57,34 @@ services:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
       - ./grafana/config.monitoring
-    # networks:
-    #   - back-tier
-    #   - front-tier
+    restart: unless-stopped
+    networks:
+      monitoring_net:
+        ipv4_address: 10.0.10.4
+
+  snmp_exporter:
+    image: quay.io/ricardbejarano/snmp_exporter:0.19.0
+    container_name: snmp_exporter
+    ports:
+      - 9116:9116
+    # volumes:
+      # - ./snmp/snmp.yml:/snmp.yml
+    networks:
+      monitoring_net:
+        ipv4_address: 10.0.10.5
     restart: unless-stopped
 
 volumes:
   prometheus-data: {}
   grafana-data: {}
+
+networks:
+  monitoring_net:
+    driver: bridge
+    name: monitoring_net
+    ipam:
+     config:
+       - subnet: 10.0.10.0/24
+  pihole_net:
+    external: true
+    name: pihole_net

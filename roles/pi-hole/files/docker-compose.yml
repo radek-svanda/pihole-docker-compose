@@ -42,8 +42,8 @@ services:
       TZ: 'Europe/Prague'
       WEBPASSWORD: 'wIyTlOamZ'
       ServerIP: '10.0.0.3'
-      DNS1: '10.0.0.2#5054'
-      DNS2: '10.0.0.4#5055'
+      DNS1: '10.0.0.4#5055'
+      DNS2: '10.0.0.2#5054'
       IPv6: 'true'
       DNSMASQ_LISTENING: 'all'
     networks:
@@ -59,9 +59,23 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 
+  pihole-exporter:
+    container_name: pihole-exporter
+    image: ekofr/pihole-exporter:v0.0.11
+    ports:
+      - "9617:9617"
+    environment:
+      PIHOLE_HOSTNAME: 10.0.0.3
+      PIHOLE_PASSWORD: 'wIyTlOamZ'
+      PORT: 9617
+    networks:
+      pihole_net:
+        ipv4_address: 10.0.0.5
+
 networks:
   pihole_net:
     driver: bridge
+    name: pihole_net
     ipam:
      config:
-       - subnet: 10.0.0.0/29
+       - subnet: 10.0.0.0/28

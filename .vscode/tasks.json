@@ -4,7 +4,7 @@
       {
         "label": "deploy",
         "type": "shell",
-        "command": "ANSIBLE_CONFIG=ansible.cfg ansible-playbook site.yml",
+        "command": "ANSIBLE_CONFIG=ansible.cfg ansible-playbook -v site.yml",
         "problemMatcher": []
       }
     ]
