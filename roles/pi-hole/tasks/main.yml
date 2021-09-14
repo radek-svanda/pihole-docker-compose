@@ -1,14 +1,17 @@
-- file: path="{{ item }}" state=directory
+- name: Ensure workdir exists
+  file: path="{{ item }}" state=directory
   with_items:
     - "{{ basedir }}"
     - "{{ basedir }}/etc-pihole"
     - "{{ basedir }}/etc-dnsmasq.d"
-- copy:
+- name: Copy config directories
+  copy:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
     - dnscrypt-proxy.toml
-- docker_compose: project_src="{{ basedir }}"
+- name: Build and start docker containers
+  docker_compose: project_src="{{ basedir }}"
 
 # https://www.observability.blog/monitoring-pi-hole-with-prometheus/

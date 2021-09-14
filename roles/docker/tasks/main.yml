@@ -1,12 +1,22 @@
 
-- file: path="{{ home }}/docker" state=directory
-- get_url:
+- name: Ensure docker work directory
+  file: path="{{ home }}/docker" state=directory
+- name: Get docker install script
+  get_url:
     url: https://get.docker.com/
     dest: "{{ home }}/docker/install.sh"
     mode: '0700'
-- command: sh install.sh
+- name: Install docker
+  command: sh install.sh
   become: yes
   args:
     chdir: "{{ home }}/docker"
     creates: /usr/bin/docker
-- pip: name=docker state=present
+- name: Install docker for python
+  pip: name=docker state=present
+- name: Add default user to docker group
+  user:
+    name: '{{ user }}'
+    groups: docker
+    append: yes
+  become: yes

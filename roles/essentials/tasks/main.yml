@@ -1,5 +1,33 @@
-- apt:
+
+# - ansible.builtin.hostname:
+#     name: pihole
+
+- name: Generate locales
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - en_US.UTF-8
+    - cs_CZ.UTF-8
+  become: yes
+
+- name: Set default locale
+  command: /usr/sbin/update-locale LANG=en_US.UTF-8
+  changed_when: false
+  become: yes
+
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 604800 # 1 week
+  become: yes
+
+- name: Install essential packages
+  apt:
     name:
       - python3-pip
+      - python3-venv
+      - vim
     state: present
   become: yes

@@ -4,6 +4,7 @@
   gather_facts: no
   vars:
     home: /home/pi
+    user: pi
   roles:
     - role: essentials
     - role: docker

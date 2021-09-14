@@ -18,12 +18,11 @@
       }
     ]
   },
-  "description": "Dashboard to get an overview of one Linux server.\r\n",
+  "description": "",
   "editable": true,
   "gnetId": 3297,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1631139386361,
+  "iteration": 1631605411218,
   "links": [],
   "panels": [
     {
@@ -199,14 +198,17 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:92",
           "alias": "read",
           "yaxis": 1
         },
         {
+          "$$hashKey": "object:93",
           "alias": "{instance=\"172.17.0.1:9100\"}",
           "yaxis": 2
         },
         {
+          "$$hashKey": "object:94",
           "alias": "io time",
           "yaxis": 2
         }
@@ -217,7 +219,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_disk_read_bytes_total{device=\"mmcblk0\", job=\"raspberry\"}[2m])",
+          "expr": "rate(node_disk_read_bytes_total{device=\"sda\", job=\"raspberry\"}[1m])",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -228,7 +230,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(node_disk_written_bytes_total{device=\"mmcblk0\", job=\"raspberry\"}[2m])",
+          "expr": "rate(node_disk_written_bytes_total{device=\"sda\", job=\"raspberry\"}[1m])",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{device}} bytes written",
@@ -237,7 +239,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(node_disk_io_time_weighted_seconds_total{device=\"mmcblk0\", job=\"raspberry\"}[2m])",
+          "expr": "rate(node_disk_io_time_weighted_seconds_total{device=\"sda\", job=\"raspberry\"}[1m])",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{device}} weighted time spent in IO, ms",
@@ -336,7 +338,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "100 - avg by (cpu) ( irate(node_cpu_seconds_total{mode=\"idle\",job=\"raspberry\"}[2m])) * 100",
+          "expr": "100 - avg by (cpu) ( irate(node_cpu_seconds_total{mode=\"idle\",job=\"raspberry\"}[1m])) * 100",
           "hide": false,
           "interval": "",
           "intervalFactor": 10,
@@ -452,7 +454,7 @@
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "",
+          "legendFormat": "Available",
           "refId": "A"
         },
         {
@@ -1177,7 +1179,7 @@
   "schemaVersion": 30,
   "style": "dark",
   "tags": [
-    "prometheus"
+    "raspberry"
   ],
   "templating": {
     "list": [
@@ -1194,7 +1196,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-12h",
     "to": "now-1m"
   },
   "timepicker": {
@@ -1225,7 +1227,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Generic Node",
+  "title": "Raspberry",
   "uid": "7cE4CWWRk",
-  "version": 16
+  "version": 3
 }

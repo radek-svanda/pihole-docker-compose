@@ -1,12 +1,16 @@
-- file: path="{{ item }}" state=directory
+- name: Ensure workdir exists
+  file: path="{{ item }}" state=directory
   with_items:
     - "{{ basedir }}"
     - "{{ basedir }}/prometheus"
     - "{{ basedir }}/grafana"
-- copy:
+- name: Deploy config files
+  copy:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
     - prometheus/
     - grafana/
+- name: Build and start docker containers
+  docker_compose: project_src="{{ basedir }}"
