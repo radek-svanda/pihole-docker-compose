@@ -26,6 +26,9 @@
 - name: Install essential packages
   apt:
     name:
+      - iftop
+      - iotop
+      - powertop
       - python3-pip
       - python3-venv
       - vim

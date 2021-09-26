@@ -2,8 +2,9 @@
   file: path="{{ item }}" state=directory
   with_items:
     - "{{ basedir }}"
-    - "{{ basedir }}/prometheus"
-    - "{{ basedir }}/grafana"
+    # - "{{ basedir }}/prometheus"
+    # - "{{ basedir }}/grafana"
+    # - "{{ basedir }}/speedtest"
 - name: Deploy config files
   copy:
     src: "{{ item }}"
@@ -12,5 +13,6 @@
     - docker-compose.yml
     - prometheus/
     - grafana/
-- name: Build and start docker containers
-  docker_compose: project_src="{{ basedir }}"
+    - speedtest/
+# - name: Build and start docker containers
+  # docker_compose: project_src="{{ basedir }}"

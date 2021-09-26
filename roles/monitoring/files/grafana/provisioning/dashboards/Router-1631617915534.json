@@ -22,7 +22,7 @@
   "editable": true,
   "gnetId": 3297,
   "graphTooltip": 0,
-  "iteration": 1631605411218,
+  "iteration": 1632171406230,
   "links": [],
   "panels": [
     {
@@ -187,7 +187,7 @@
       "lines": true,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
@@ -416,7 +416,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 11
       },
@@ -469,26 +469,7 @@
           "step": 4
         }
       ],
-      "thresholds": [
-        {
-          "$$hashKey": "object:138",
-          "colorMode": "warning",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 10,
-          "yaxis": "left"
-        },
-        {
-          "$$hashKey": "object:139",
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 3,
-          "yaxis": "left"
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -546,8 +527,8 @@
       "grid": {},
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 11
       },
       "hiddenSeries": false,
@@ -611,7 +592,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Free memory",
+      "title": "Used memory",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -652,159 +633,102 @@
       }
     },
     {
-      "cacheTimeout": null,
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "thresholds",
+            "seriesBy": "last"
           },
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": 3600000,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
             }
-          ],
-          "max": 100,
+          },
+          "mappings": [],
+          "max": 70,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(245, 54, 54, 0.9)",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 5
+                "color": "orange",
+                "value": 50
               },
               {
-                "color": "rgba(50, 172, 45, 0.97)",
-                "value": 10
+                "color": "red",
+                "value": 60
               }
             ]
           },
-          "unit": "percent"
+          "unit": "celsius"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 12,
-        "y": 20
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 11
       },
-      "id": 14,
-      "interval": null,
+      "id": 26,
       "links": [],
-      "maxDataPoints": 100,
       "options": {
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
         },
-        "showThresholdLabels": true,
-        "showThresholdMarkers": true,
-        "text": {}
+        "tooltip": {
+          "mode": "single"
+        }
       },
       "pluginVersion": "8.1.2",
       "targets": [
         {
-          "expr": "100*min(node_filesystem_free{fstype !~ \"nfs|rpc_pipefs\",device!=\"/etc/auto.misc\",mountpoint !~ \"/boot|/net|/selinux\",instance=\"$server\"}/node_filesystem_size{fstype !~ \"nfs|rpc_pipefs\",device!=\"/etc/auto.misc\",mountpoint !~ \"/boot|/net|/selinux\",instance=\"$server\"})",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "refId": "A",
-          "step": 30
+          "exemplar": false,
+          "expr": "node_thermal_zone_temp{job=\"raspberry\"}",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Temp",
+          "refId": "A"
         }
       ],
-      "title": "Min Free disk space",
-      "type": "gauge"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 10
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.97)",
-                "value": 20
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 20
-      },
-      "id": 13,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": true,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "8.1.2",
-      "targets": [
-        {
-          "expr": "100*(node_memory_MemFree{instance=~\"$server\",job=\"raspberry\"}+node_memory_Buffers{instance=~\"$server\",job=\"raspberry\"}+node_memory_Cached{instance=~\"$server\",job=\"raspberry\"})/node_memory_MemTotal{instance=~\"$server\",job=\"raspberry\"}",
-          "intervalFactor": 2,
-          "refId": "B",
-          "step": 30
-        }
-      ],
-      "title": "Free memory",
-      "type": "gauge"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Temperature",
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -813,7 +737,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 20
       },
       "id": 18,
       "panels": [],
@@ -828,7 +752,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 21
       },
       "id": 19,
       "panels": [],
@@ -851,7 +775,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 10,
@@ -960,7 +884,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 8,
@@ -1065,7 +989,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 31
       },
       "id": 22,
       "panels": [],
@@ -1088,7 +1012,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 40
+        "y": 32
       },
       "id": 16,
       "links": [],
@@ -1166,7 +1090,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 39
       },
       "id": 23,
       "panels": [],
@@ -1196,7 +1120,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now-1m"
   },
   "timepicker": {
@@ -1229,5 +1153,5 @@
   "timezone": "browser",
   "title": "Raspberry",
   "uid": "7cE4CWWRk",
-  "version": 3
+  "version": 1
 }

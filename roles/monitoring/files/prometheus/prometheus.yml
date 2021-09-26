@@ -18,6 +18,13 @@ scrape_configs:
     static_configs:
       - targets:
           - '10.0.0.5:9617'
+  - job_name: speedtest
+    metrics_path: /metrics
+    scrape_interval: 2h
+    scrape_timeout: 30s
+    static_configs:
+      - targets:
+          - '10.0.10.6:9112'
   - job_name: router
     metrics_path: /snmp
     static_configs:
