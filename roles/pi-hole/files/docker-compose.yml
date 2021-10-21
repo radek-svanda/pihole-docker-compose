@@ -32,7 +32,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:v5.8.1
+    image: pihole/pihole:2021.10
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -58,19 +58,6 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-
-  pihole-exporter:
-    container_name: pihole-exporter
-    image: ekofr/pihole-exporter:v0.0.11
-    ports:
-      - "9617:9617"
-    environment:
-      PIHOLE_HOSTNAME: 10.0.0.3
-      PIHOLE_PASSWORD: 'wIyTlOamZ'
-      PORT: 9617
-    networks:
-      pihole_net:
-        ipv4_address: 10.0.0.5
 
 networks:
   pihole_net:

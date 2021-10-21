@@ -16,13 +16,6 @@
   changed_when: false
   become: yes
 
-- name: Update and upgrade apt packages
-  apt:
-    upgrade: yes
-    update_cache: yes
-    cache_valid_time: 604800 # 1 week
-  become: yes
-
 - name: Install essential packages
   apt:
     name:
@@ -32,5 +25,20 @@
       - python3-pip
       - python3-venv
       - vim
+      - pipx
     state: present
+  become: yes
+
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 604800 # 1 week
+  become: yes
+  register: update_all
+
+- name: Reboot after upgrade
+  reboot:
+    reboot_timeout: 300
+  when: update_all.changed
   become: yes

@@ -20,3 +20,10 @@
     groups: docker
     append: yes
   become: yes
+  register: docker_group
+
+- name: Reboot pi after group change
+  reboot:
+    reboot_timeout: 300
+  when: docker_group.changed
+  become: yes
