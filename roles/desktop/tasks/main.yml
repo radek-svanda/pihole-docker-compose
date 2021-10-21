@@ -1,0 +1,13 @@
+- apt:
+    name:
+      - xserver-xorg
+      - raspberrypi-ui-mods
+      - realvnc-vnc-server
+
+# Enabling VNC Server at the command line
+# You can enable VNC Server at the command line using raspi-config:
+# sudo raspi-config
+# Now, enable VNC Server by doing the following:
+#     Navigate to Interfacing Options.
+#     Scroll down and select VNC › Yes.
+
