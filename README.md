@@ -20,5 +20,6 @@ See [how to use env variables in docker-compose](https://docs.docker.com/compose
 ## See also:
 
 * [Pi-hole project](https://pi-hole.net/)
+* [Pi-hole docker images](https://github.com/pi-hole/docker-pi-hole)
 * [DNSCRYPT project](https://www.dnscrypt.info/) for encrypted/anonymized DNS communication
 * [Cloudflare tunnel clinet](https://github.com/cloudflare/cloudflared)

@@ -6,9 +6,6 @@ services:
     container_name: cloudflared
     image: visibilityspots/cloudflared:alpine-3.13
     restart: unless-stopped
-    # ports:
-    #   - "${CF_PORT}:${CF_PORT}/tcp"
-    #   - "${CF_PORT}:${CF_PORT}/udp"
     environment:
       TZ: ${TZ}
       ADDRESS: "0.0.0.0"
@@ -21,9 +18,6 @@ services:
     container_name: dnscrypt-proxy
     image: gists/dnscrypt-proxy:2.0.45
     restart: unless-stopped
-    # ports:
-    #   - "${DCRYPT_PORT}:${DCRYPT_PORT}/udp"
-    #   - "${DCRYPT_PORT}:${DCRYPT_PORT}/tcp"
     volumes:
       - './dnscrypt-proxy.toml:/etc/dnscrypt-proxy/dnscrypt-proxy.toml'
     networks:
@@ -32,7 +26,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:2021.10
+    image: pihole/pihole:2021.12.1
     ports:
       - "53:53/tcp"
       - "53:53/udp"
